@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+// import mapStateToProps from 'react-redux/lib/connect/mapStateToProps';
+import { postSmurf } from '../actions';
 
 const AddForm = (props) => {
+    const { dispatch } = props;
     const [state, setState] = useState({
         name:"",
         position:"",
@@ -24,6 +28,7 @@ const AddForm = (props) => {
             //dispatch a custom error action
         } else {
             //dispatch an addSmurf action
+            dispatch(postSmurf())
         }
     }
 
@@ -54,7 +59,13 @@ const AddForm = (props) => {
     </section>);
 }
 
-export default AddForm;
+const mapStateToProps = state => {
+    return{
+        isLoading: state.isLoading,
+    };
+};
+
+export default connect(mapStateToProps)(AddForm);
 
 //Task List:
 //1. Connect the errorMessage, setError and addSmurf actions to the AddForm component.
